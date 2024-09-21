@@ -1,9 +1,11 @@
-// app/page.tsx
 'use client';
 
 import { useState } from 'react';
 import { quizQuestions, QuizQuestion } from './quiz-data';
 import { Typography, Button, Radio, RadioGroup, FormControlLabel, FormControl, Box } from '@mui/material';
+import Image from 'next/image';
+import imgQuestion from '../app/image/question.svg'
+import completed from '../app/image/completed.svg'
 
 export default function QuizApp() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -39,22 +41,51 @@ export default function QuizApp() {
     <Box mt={4}>
       {!quizCompleted ? (
         <>
-          <Typography variant="h5" gutterBottom>
-            Pergunta {currentQuestionIndex + 1}/{quizQuestions.length}
-          </Typography>
-          <Typography variant="h6">{currentQuestion.question}</Typography>
-          <FormControl component="fieldset">
-            <RadioGroup value={selectedOption} onChange={handleOptionChange}>
-              {currentQuestion.options.map((option, index) => (
-                <FormControlLabel
-                  key={index}
-                  value={option}
-                  control={<Radio />}
-                  label={option}
-                />
-              ))}
-            </RadioGroup>
-          </FormControl>
+          <Box
+            sx={{
+              background: '#613DFC',
+              textAlign: 'center'
+            }}
+          >
+            <Typography
+              variant="h2"
+              gutterBottom
+              sx={{
+                fontWeight: 'bold',
+                color: '#fff'
+              }}
+            >
+              Pergunta {currentQuestionIndex + 1}/{quizQuestions.length}
+            </Typography>
+          </Box>
+          <Box sx={{
+            width: '100%',
+            textAlign: 'center',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Image
+              src={imgQuestion}
+              alt='image the question'
+            />
+          </Box>
+          <Box sx={{ background: '#613DFC', borderRadius: '40px' }}>
+            <Box sx={{ m: '40px', color: '#fff' }}>
+              <Typography variant="h4" sx={{ fontWeight: 'bold' }}>{currentQuestion.question}</Typography>
+              <FormControl component="fieldset">
+                <RadioGroup value={selectedOption} onChange={handleOptionChange}>
+                  {currentQuestion.options.map((option, index) => (
+                    <FormControlLabel
+                      key={index}
+                      value={option}
+                      control={<Radio />}
+                      label={option}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+            </Box>
+          </Box>
           {showExplanation ? (
             <>
               <Typography
@@ -65,7 +96,9 @@ export default function QuizApp() {
                   ? 'Correto!'
                   : 'Incorreto!'} {currentQuestion.explanation}
               </Typography>
-              <Button variant="contained" color="primary" onClick={handleNextQuestion} sx={{ mt: 2 }}>
+              <Button variant="contained" color="primary" onClick={handleNextQuestion}
+                sx={{ mb: 2, display: 'flex', justifyContent: 'center', backgroundColor: '#613DFC', color: '#fff' }}
+              >
                 Próxima Pergunta
               </Button>
             </>
@@ -75,16 +108,28 @@ export default function QuizApp() {
               color="primary"
               onClick={handleSubmitAnswer}
               disabled={!selectedOption}
-              sx={{ mt: 2 }}
+              sx={{ mb: 2, display: 'flex', justifyContent: 'center', color: '#fff' }}
             >
               Confirmar Resposta
             </Button>
           )}
         </>
       ) : (
-        <Typography variant="h4" gutterBottom>
-          Quiz Concluído! Sua pontuação: {score}/{quizQuestions.length}
-        </Typography>
+        <Box sx={{
+          width: '100%',
+          textAlign: 'center',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <Image
+            src={completed}
+            alt='image the question'
+          />
+
+          <Typography variant="h4" gutterBottom>
+            Quiz Concluído! Sua pontuação: {score}/{quizQuestions.length}
+          </Typography>
+        </Box>
       )}
     </Box>
   );

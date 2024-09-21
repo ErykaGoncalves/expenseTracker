@@ -1,4 +1,3 @@
-// app/layout.tsx
 'use client';
 
 import { CssBaseline, Container, ThemeProvider } from '@mui/material';
@@ -8,7 +7,7 @@ import './globals.css';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#3DCF40',
     },
     secondary: {
       main: '#dc004e',
